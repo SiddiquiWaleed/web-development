@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    
+    <p id="demo"></p>
+
+    <script>
+        var today = new Date();
+        var UpgradeDay = new Date("January 1, 2022");
+        var msPerDay = 24 * 60 * 60 * 1000;
+
+        // Here We calculate the additional time for Each Group
+        // Just adding the extra number of days for the group
+        // and we get the upgrade date for that group
+        var additionalTimeForEachGroup = UpgradeDay.getTime() + (10 * msPerDay);
+        var timeLeft = (additionalTimeForEachGroup - today.getTime());
+        var days = timeLeft / msPerDay;
+        var daysLeft = Math.floor(days);
+        document.getElementById("demo").innerHTML = `
+            There are only<br><h4> ${daysLeft} days</h4> Until Your Computer Upgrade
+        `
+    </script>
+    
+</body>
+</html>
