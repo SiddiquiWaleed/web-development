@@ -1,0 +1,187 @@
+<%- include('../partials/headerIncludes') %>
+	<style>
+		.pricingTable{
+			background: #fff;
+			font-family: 'Roboto', sans-serif;
+			padding: 40px 30px 0;
+			margin: 0 10px;
+			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+			border-radius: 0 70px 0 0;
+		}
+		.pricingTable .pricingTable-header{
+			padding: 0 0 15px;
+			margin: 0 0 20px;
+			border-bottom: 1px solid #515365;
+		}
+		.pricingTable .title{
+			color: #515365;
+			font-size: 30px;
+			font-weight: 300;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+			margin: 0;
+		}
+		.pricingTable .title i{
+			margin-right: 5px;
+			display: inline-block;
+		}
+		.pricingTable .price-value{
+			color: #515365;
+			font-size: 100px;
+			font-weight: 700;
+			line-height: 100px;
+			letter-spacing: -3px;
+			text-align: center;
+			margin: 0 0 20px;
+		}
+		.pricingTable .price-value sup{
+			font-size: 50px;
+			letter-spacing: normal;
+			vertical-align: middle;
+		}
+		.pricingTable .pricing-content{
+			background: linear-gradient(to right bottom, #557A95, #557A95);
+			text-align: center;
+			padding: 40px 0;
+			margin: 0 -45px;
+			border-radius: 60px 0 0 0;
+		}
+		.pricingTable .pricing-content ul{
+			text-align: left;
+			padding: 0 0 25px;
+			margin: 0 0 40px;
+			list-style: none;
+			border-bottom: 1px solid #fff;
+			display: inline-block;
+		}
+		.pricingTable .pricing-content ul li{
+			color: #fff;
+			font-size: 18px;
+			font-weight: 300;
+			padding: 0 0 0 30px;
+			margin: 0 0 15px;
+			position: relative;
+		}
+		.pricingTable .pricing-content ul li:last-child{ margin: 0; }
+		.pricingTable .pricing-content li:before{
+			content: "\f00c";
+			font-family: "Font Awesome 5 free";
+			font-size: 16px;
+			font-weight: 900;
+			position: absolute;
+			top: 1px;
+			left: 0;
+		}
+		.pricingTable .pricing-content li.disable:before{ content: "\f00d"; }
+		.pricingTable .pricing-content li:last-child{ margin-bottom: 0; }
+		.pricingTable .pricingTable-signup a{
+			color: #fff;
+			font-size: 25px;
+			font-weight: 300;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			width: 150px;
+			padding: 5px;
+			margin: 0 auto;
+			border: 2px solid #fff;
+			border-radius: 50px;
+			display: block;
+			transition: all 0.5s ease 0s;
+		}
+		.pricingTable .pricingTable-signup a:hover{
+			text-shadow: 3px 3px rgba(255,255,255,0.5);
+			box-shadow: 3px 3px rgba(255,255,255,0.5);
+		}
+		.pricingTable.orange .pricingTable-header{ border-bottom-color: #515365; }
+		.pricingTable.orange .title,
+		.pricingTable.orange .price-value{
+			color: #515365;
+		}
+		.pricingTable.orange .pricing-content{
+			background: linear-gradient(to right bottom, #557A95, #557A95);
+		}
+		.pricingTable.purple .pricingTable-header{ border-bottom-color: #FF72FC; }
+		.pricingTable.purple .title,
+		.pricingTable.purple .price-value{
+			color: #FF72FC;
+		}
+		.pricingTable.purple .pricing-content{
+			background: linear-gradient(to right bottom, #557A95, #557A95);
+		}
+		@media only screen and (max-width: 990px){
+			.pricingTable{ margin-bottom: 40px; }
+		}
+	</style>
+</head>
+<body class="body-bg-white">
+<div class="stunning-header bg-primary-opacity">
+
+
+	<%- include('../partials/stunningHeader') %>
+	<div class="header-spacer--standard"></div>
+	<div class="stunning-header-content">
+		<h1 class="stunning-header-title">Pricing</h1>
+	</div>
+	<div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+<div class="demo" style="margin-bottom: 40px;">
+	<div class="container">
+		<div class="row" style="justify-content: center">
+			<div class="col-md-4 col-sm-6">
+				<div class="pricingTable">
+					<div class="pricingTable-header">
+						<h3 class="title"><i class="fa fa-car"></i> Candidate</h3>
+					</div>
+					<div class="price-value">£15<sup>00</sup></div>
+					<div class="pricing-content">
+						<ul>
+							<li>50GB Disk Space</li>
+							<li>50 Email Accounts</li>
+							<li class="disable">50GB Bandwidth</li>
+							<li>Maintenance</li>
+							<li class="disable">15 Subdomains</li>
+						</ul>
+						<%
+							if(!loggedIn) {
+								%>
+								<div class="pricingTable-signup">
+									<a href="/register">Sign Up</a>
+								</div>
+								<%
+							}
+ 						%>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-6">
+				<div class="pricingTable orange">
+					<div class="pricingTable-header">
+						<h3 class="title"><i class="fa fa-train"></i> Employer</h3>
+					</div>
+					<div class="price-value">£15<sup>00</sup></div>
+					<div class="pricing-content">
+						<ul>
+							<li>50GB Disk Space</li>
+							<li>50 Email Accounts</li>
+							<li>50GB Bandwidth</li>
+							<li>Maintenance</li>
+							<li class="disable">15 Subdomains</li>
+						</ul>
+						<%
+							if(!loggedIn) {
+								%>
+								<div class="pricingTable-signup">
+									<a href="/register">Sign Up</a>
+								</div>
+								<%
+							}
+ 						%>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%- include('../partials/footerIncludes') %>
+</body>
+</html>

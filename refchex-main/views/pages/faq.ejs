@@ -1,0 +1,109 @@
+<%- include('../partials/headerIncludes') %>
+</head>
+<body class="body-bg-white">
+
+<div class="stunning-header bg-primary-opacity">
+
+    <%- include('../partials/stunningHeader') %>
+    <div class="header-spacer--standard"></div>
+    <div class="stunning-header-content">
+        <h1 class="stunning-header-title">Frequently Asked Questions</h1>
+    </div>
+    <div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+
+
+<section class="mb60">
+    <div class="container">
+        <div class="row">
+            <div class="col col-xl-8 m-auto col-lg-10 col-md-12 col-sm-12 col-12">
+                <div class="accordion accordion-faqs" id="accordionExample">
+                    <div>
+                        <h2>FAQ For Candidates</h2>
+                    </div>
+                    <%
+                        for(let i = 0; i < allCanFAQ.length; i++) {
+                            %>
+                            <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <%= allCanFAQ[i].faq_question %>
+                                    <span class="icons-wrap">
+									<svg class="olymp-plus-icon"><use xlink:href="#olymp-plus-icon"></use></svg>
+									<svg class="olymp-accordion-close-icon"><use xlink:href="#olymp-accordion-close-icon"></use></svg>
+								</span>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p><%= allCanFAQ[i].faq_answer %></p>
+                                </div>
+                            </div>
+                        </div>
+                            <%
+                        }
+                    %>
+
+                    <div class="mt-5">
+                        <h2>FAQ For Employers</h2>
+                    </div>
+
+                    <%
+                        for(let i = 0; i < allEmpCan.length; i++) {
+                            %>
+                            <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <%= allEmpCan[i].faq_question %>
+                                    <span class="icons-wrap">
+									<svg class="olymp-plus-icon"><use xlink:href="#olymp-plus-icon"></use></svg>
+									<svg class="olymp-accordion-close-icon"><use xlink:href="#olymp-accordion-close-icon"></use></svg>
+								</span>
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p><%= allEmpCan[i].faq_answer %></p>
+                                </div>
+                            </div>
+                        </div>
+                            <%
+                        }
+                    %>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="main-popup-search" tabindex="-1" role="dialog" aria-labelledby="main-popup-search" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered window-popup main-popup-search" role="document">
+        <div class="modal-content">
+            <a href="#" class="close icon-close" data-bs-dismiss="modal" aria-label="Close">
+                <svg class="olymp-close-icon"><use xlink:href="#olymp-close-icon"></use></svg>
+            </a>
+            <div class="modal-body">
+                <form class="form-inline search-form" method="post">
+                    <div class="form-group label-floating">
+                        <label class="control-label">What are you looking for?</label>
+                        <input class="form-control bg-white" placeholder="" type="text" value="">
+                    </div>
+
+                    <button class="btn btn-purple btn-lg">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ... end Window Popup Main Search -->
+
+<a class="back-to-top">
+    <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+</a>
+
+<%- include('../partials/footerIncludes') %>
+
+</body>
+</html>

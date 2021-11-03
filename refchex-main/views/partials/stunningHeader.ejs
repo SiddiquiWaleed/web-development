@@ -1,0 +1,54 @@
+<div class="header--standard header--standard-landing" id="header--standard">
+    <div class="container">
+        <div class="header--standard-wrap">
+            <a href="#" class="logo">
+                <div class="img-wrap">
+                    <img loading="lazy" src="/img/Full white Refchex Logo.png" width="65" height="34">
+                    <img loading="lazy" src="/img/Refchex Logo Black.png" width="65" height="34" class="logo-colored">
+                </div>
+                <div class="title-block">
+                    <h6 class="logo-title">refchex</h6>
+                </div>
+            </a>
+            <a href="#" class="open-responsive-menu js-open-responsive-menu">
+                <svg class="olymp-menu-icon">
+                    <use xlink:href="#olymp-menu-icon"></use>
+                </svg>
+            </a>
+
+            <div class="nav nav-pills nav1 header-menu expanded-menu">
+                <div class="mCustomScrollbar" style="margin-right: -25px;">
+                    <ul>
+                        <li class="nav-item">
+                            <a href="/" class="nav-link" style="color: #fff">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/aboutus" class="nav-link" style="color: #fff">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/pricing" class="nav-link" style="color: #fff">Pricing</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/faq" class="nav-link" style="color: #fff">FAQ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/contact" class="nav-link" style="color: #fff">Contact</a>
+                        </li>
+                        <%
+                        if(loggedIn) {
+                        %>
+                            <li class="nav-item">
+                                <a href="/logout" class="nav-link" style="color: #fff">Logout</a>
+                            </li>
+                        <%
+                        }
+                        %>
+                        <li class="close-responsive-menu js-close-responsive-menu">
+                            <svg class="olymp-close-icon"><use xlink:href="#olymp-close-icon"></use></svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

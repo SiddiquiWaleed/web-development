@@ -1,0 +1,454 @@
+<%- include('../partials/headerIncludes') %>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+</head>
+<body>
+
+<div style="background-color: #FFFFFF;position: fixed;top: -2000px; bottom: 0px;z-index: 100; width: 100%; height: 100vh;" id="add-ref-window">
+    <form id="add-ref-form" class="content" style="display: flex;justify-content: space-around;" enctype="multipart/form-data">
+        <div>
+            <img src="/img/add-ref-window-img.png" style="height: 100%;max-width: 450px;width: 100%;object-fit: cover;vertical-align: middle;border: 0;">
+        </div>
+        <div class="row" style="padding: 20px 35px;overflow-y: auto; height: 100vh;">
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div style="display: flex;justify-content: space-between;align-items: center">
+                    <div>
+                        <h1>Add New Reference</h1>
+                    </div>
+                    <div>
+                        <button id="close-add-ref-window-btn" style="border: none;border-radius: 10px;cursor: pointer;background-color: rgb(255, 255, 255);">
+                            <img src="/svg-icons/close.svg" alt="arrow" class="back-icon" width="20" height="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">Start Date</label>
+                        <input value="10/24/1984" name="startDate" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">End Date</label>
+                        <input name="endDate" value="10/24/1984" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Email of Referee</label>
+                    <input class="form-control" placeholder="" type="email" name="refereeEmail">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Title</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeTitle">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Surname</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeSurname">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Name</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeName">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Company Name</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeCompanyName">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Referee Designation</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeDesignation">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Address</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeAddress">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Postal Code</label>
+                        <input class="form-control" placeholder="" type="text" name="refereePostalCode">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Phone Number</label>
+                    <input class="form-control" placeholder="" type="text" name="refereePhoneNumber">
+                </div>
+                <div class="form-group label-floating is-focused">
+                    <label class="control-label">Attach Documents</label>
+                    <input class="form-control" type="file" multiple name="refereeDocuments">
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-lg btn-primary full-width">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="stunning-header bg-primary-opacity">
+    <%- include('../partials/stunningHeader') %>
+    <div class="header-spacer--standard" style="height: 30px"></div>
+    <div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+<style>
+    .user-header .user-info .candidate-id {
+        color: #929292;
+        font-size: 15px;
+    }
+
+    .user-header .user-info .user-name {
+        color: #333;
+        font-weight: 600;
+        font-size: 20px;
+        margin-top: -5px;
+    }
+    .user-header .user-profile-photo {
+        width: 50px;
+        margin-right: 5%;
+        height: 50px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+    }
+    .user-header .user-profile-photo {
+        width: 20%;
+        margin-right: 5%;
+    }
+    .user-header {
+        display: flex;
+        padding: 25px;
+        background: #e2e2e2;
+    }
+    .siderbar{
+        background: #e2e2e2;
+        border-right: 1px solid #d0d0d0;
+        padding-top: 40px;
+        height: 100vh;
+    }
+    .main-content-area{
+        padding: 60px 40px;
+        background-color: #fff;
+    }
+    .add-refference-btn{
+        background-color: #557A95;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 7px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        margin: 0 25px;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+    .add-refference-btn:hover {
+        background-color: #496c86;
+        color: #fff;
+    }
+    .sidebar-menu-container ul li a {
+        font-size: 16px;
+        margin-bottom: 16px;
+        display: block;
+        color: #333;
+    }
+
+    .sidebar-menu-container {
+        padding: 25px;
+    }
+    .sidebar-menu-container ul li a:hover,
+    .sidebar-menu-container ul li a.open{
+        font-weight: 600;
+        border-left: 4px solid #557a95;
+        transition: 0.25s;
+        padding-left: 15px;
+    }
+    .sidebar-menu-container ul li a i {
+        font-size: 18px;
+        margin-right: 10px;
+        color: #4a4a4a;
+    }
+    .sidebar-menu-container ul li a:hover i,
+    .sidebar-menu-container ul li a.open i{
+        color: #557a95;
+    }
+    .dashboard-container {
+        background: linear-gradient(90deg, #e2e2e2 50%, transparent 50%);
+    }
+    .references-table{
+        color:#333;
+    }
+    .references-table i {
+        margin-right: 15px;
+    }
+    td.approved {
+        color: #069238;
+    }
+    td.rejected {
+        color: #a70606;
+    }
+    td.pending {
+        color: #ad7700;
+    }
+    .table thead th {
+        border-top: 0;
+    }
+    .send-mail:hover {
+        background: #333;
+    }
+    .send-mail {
+        background: #557a95;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+    .send-mail:hover{
+        background-color: #496c86;
+        color:#fff;
+    }
+    .references-table tbody tr td:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 9px;
+    }
+</style>
+
+<div class="container-fluid dashboard-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 siderbar">
+                <div class="user-header">
+                    <%
+                    let profilePic = user.profile_pic
+                    user.profile_pic = profilePic.replace('uploads\\', 'uploads/')
+                    %>
+                    <div class="user-profile-photo" style="background-image: url('/<%= user.profile_pic %>')">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name"><span style="text-transform: capitalize"><%= user.first_name %> <%= user.last_name %></span></div>
+                        <div class="candidate-id"><%= user.candidate_id %></div>
+                        <div class="candidate-id"><%= user.email %></div>
+                    </div>
+
+                </div>
+                <a class="add-refference-btn" id="add-ref-btn" href="#">Add a Reference</a>
+
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu">
+                        <li><a href="/dashboard_can"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Profile Settings</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <style>
+                .reference-info{
+                    color:#333;
+                }
+                .reference-info .name {
+                    font-size: 18px;
+                }
+
+                .reference-info .label {
+                    font-weight: 500;
+                    text-transform: uppercase;
+                }
+                .row.reference-info .box {
+                    margin-bottom: 20px;
+                }
+            </style>
+            <div class="col-md-9 main-content-area">
+
+                <!-- START WRITING HERE -->
+                <h2><%= reference.referee_company_name %> - <%= reference.reference_id %></h2>
+                <hr>
+                <div class="row reference-info">
+                    <div class="col-md-6 box">
+                        <div class="label">Reference Name</div>
+                        <div class="name"><%= reference.referee_title %>. <%= reference.referee_name %> <%= reference.referee_surname %></div>
+                    </div>
+                    <div class="col-md-6 box">
+                        <div class="label">Reference Email</div>
+                        <div class="name"><%= reference.referee_email %></div>
+                    </div>
+                    <div class="col-md-6 box">
+                        <div class="label">Company Name</div>
+                        <div class="name"><%= reference.referee_company_name %></div>
+                    </div>
+                    <div class="col-md-6 box">
+                        <div class="label">Referee Designation</div>
+                        <div class="name"><%= reference.referee_designation %></div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr></div>
+                    <div class="col-md-4 box">
+                        <div class="label">Address</div>
+                        <div class="name"><%= reference.referee_address %></div>
+                    </div>
+                    <div class="col-md-4 box">
+                        <div class="label">Postal Code</div>
+                        <div class="name"><%= reference.referee_postal_code %></div>
+                    </div>
+                    <div class="col-md-4 box">
+                        <div class="label">Phone Number</div>
+                        <div class="name"><%= reference.referee_phone_number %></div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr></div>
+                    <div class="col-md-6 box">
+                        <div class="label">Start Date</div>
+                        <div class="name"><%= reference.start_date %></div>
+                    </div>
+                    <div class="col-md-6 box">
+                        <div class="label">End Date</div>
+                        <div class="name"><%= reference.end_date %></div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr></div>
+                    <div class="col-md-6 box">
+                        <%
+                            if(documents[0].document_path !== null) {
+                                for(let i = 0; i < documents.length; i++) {
+                                %>
+                                    <div>
+                                        <h5 class="mr-2" style="display: inline;"><%= i+1 %></h5><a download href="<%= baseRoute %><%= documents[i].document_path %>"><%= documents[i].document_path %></a>
+                                    </div>
+                                <%
+                                }
+                            }
+                        %>
+                    </div>
+                    <div class="col-md-12">
+                        <%
+                            if(documents[0].document_path !== null) {
+                                %>
+                                <hr>
+                                <%
+                            }
+                        %>
+                    </div>
+                    <%
+                        if(reference.reason_for_leaving != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Reason for leaving</div>
+                                <div class="name"><%= reference.reason_for_leaving %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(reference.number_of_sickness != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Number of Sickness</div>
+                                <div class="name"><%= reference.number_of_sickness %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(reference.warnings != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Warnings</div>
+                                <div class="name"><%= reference.warnings %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(reference.investigations != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Investigations</div>
+                                <div class="name"><%= reference.investigations %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(reference.comment != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Comments</div>
+                                <div class="name"><%= reference.comment %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                    <%
+                        if(reference.please_explain_why != null) {
+                            %>
+                            <div class="col-md-6 box">
+                                <div class="label">Please Explain Why</div>
+                                <div class="name"><%= reference.please_explain_why %></div>
+                            </div>
+                            <%
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS Scripts -->
+<%- include('../partials/footerIncludes') %>
+<script>
+    $(function() {
+        $('#add-ref-form').submit(function (e) {
+            e.preventDefault()
+
+            let formDetails = document.getElementById('add-ref-form');
+            let formData = new FormData(formDetails);
+            $.ajax({
+                url: "<%= baseRoute %>dashboard_can/add_new_ref",
+                type: 'POST',
+                data: formData,
+                success: (result) => {
+                    window.location.href = "<%= baseRoute %>dashboard_can"
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        })
+
+        $('#add-ref-btn').click(function (e) {
+            $('#add-ref-window').animate({"top": "0px"}, 500);
+        })
+        $('#close-add-ref-window-btn').click(function (e) {
+            e.preventDefault();
+            $('#add-ref-window').animate({"top": "-2000px"}, 500);
+        })
+        $('input[name="startDate"]').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY'
+            },
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'),10)
+        }, function(start, end, label) {});
+        $('input[name="endDate"]').daterangepicker({
+            locale: {
+                format: 'DD/MM/YYYY'
+            },
+            singleDatePicker: true,
+            showDropdowns: true,
+            minYear: 1901,
+            maxYear: parseInt(moment().format('YYYY'),10)
+        }, function(start, end, label) {});
+
+    });
+</script>

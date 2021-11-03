@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="/js/jQuery/jquery-3.5.1.js"></script>
+    <script src="https://checkout.stripe.com/checkout.js"></script>
+    <script>
+        let stripePublicKey = "<%= stripePublicKey %>"
+    </script>
+</head>
+<body>
+    <button onclick="subscribe()">Subscribe</button>
+
+    <script>
+        let stripeHandler = StripeCheckout.configure({
+            key: stripePublicKey,
+            locale: 'auto',
+            token: (token) => {
+                $.ajax({
+                    url: '<%= baseRoute %>candidate_subscription/purchase',
+                    method: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        stripeTokenID: token.id,
+                        price: 15
+                    }),
+                    success: (result) => {
+                        if(result.msg === 'purchased') {
+                            alert('Complete')
+                        }
+                        else if(result.msg === 'failed') {
+                            alert('Failed')
+                        }
+                    }
+                })
+            }
+        })
+        function subscribe() {
+            stripeHandler.open({
+                amount: 15 * 100
+            })
+        }
+    </script>
+</body>
+</html>

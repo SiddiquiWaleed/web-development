@@ -1,0 +1,357 @@
+<%- include('../partials/headerIncludes') %>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    let stripePublicKey = "<%= stripePublicKey %>"
+</script>
+</head>
+<body>
+
+<div style="background-color: #FFFFFF;position: fixed;top: -2000px; bottom: 0px;z-index: 100; width: 100%; height: 100vh;" id="add-ref-window">
+    <form id="add-ref-form" class="content" style="display: flex;justify-content: space-around;" enctype="multipart/form-data">
+        <div>
+            <img src="img/add-ref-window-img.png" style="height: 100%;max-width: 450px;width: 100%;object-fit: cover;vertical-align: middle;border: 0;">
+        </div>
+        <div class="row" style="padding: 20px 35px;overflow-y: auto; height: 100vh;">
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div style="display: flex;justify-content: space-between;align-items: center">
+                    <div>
+                        <h1>Add New Reference</h1>
+                    </div>
+                    <div>
+                        <button id="close-add-ref-window-btn" style="border: none;border-radius: 10px;cursor: pointer;background-color: rgb(255, 255, 255);">
+                            <img src="svg-icons/close.svg" alt="arrow" class="back-icon" width="20" height="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">Start Date</label>
+                        <input value="10/24/1984" name="startDate" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">End Date</label>
+                        <input name="endDate" value="10/24/1984" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Email of Referee</label>
+                    <input class="form-control" placeholder="" type="email" name="refereeEmail">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Title</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeTitle">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Surname</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeSurname">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Name</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeName">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Company Name</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeCompanyName">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Referee Designation</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeDesignation">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Address</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeAddress">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Postal Code</label>
+                        <input class="form-control" placeholder="" type="text" name="refereePostalCode">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Phone Number</label>
+                    <input class="form-control" placeholder="" type="text" name="refereePhoneNumber">
+                </div>
+                <div class="form-group label-floating is-focused">
+                    <label class="control-label">Attach Documents</label>
+                    <input class="form-control" type="file" multiple name="refereeDocuments">
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-lg btn-primary full-width">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="stunning-header bg-primary-opacity">
+    <%- include('../partials/stunningHeader') %>
+    <div class="header-spacer--standard" style="height: 30px"></div>
+    <div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+<style>
+    .user-header .user-info .candidate-id {
+        color: #929292;
+        font-size: 15px;
+    }
+
+    .user-header .user-info .user-name {
+        color: #333;
+        font-weight: 600;
+        font-size: 20px;
+        margin-top: -5px;
+    }
+    .user-header .user-profile-photo {
+        width: 50px;
+        margin-right: 5%;
+        height: 50px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+    }
+    .user-header .user-profile-photo {
+        width: 20%;
+        margin-right: 5%;
+    }
+    .user-header {
+        display: flex;
+        padding: 25px;
+        background: #e2e2e2;
+    }
+    .siderbar{
+        background: #e2e2e2;
+        border-right: 1px solid #d0d0d0;
+        padding-top: 40px;
+        height: 100vh;
+    }
+    .main-content-area{
+        padding: 60px 40px;
+        background-color: #fff;
+    }
+    .add-refference-btn{
+        background-color: #557A95;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 7px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        margin: 0 25px;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+    .add-refference-btn:hover {
+        background-color: #496c86;
+        color: #fff;
+    }
+    .sidebar-menu-container ul li a {
+        font-size: 16px;
+        margin-bottom: 16px;
+        display: block;
+        color: #333;
+    }
+
+    .sidebar-menu-container {
+        padding: 25px;
+    }
+    .sidebar-menu-container ul li a:hover,
+    .sidebar-menu-container ul li a.open{
+        font-weight: 600;
+        border-left: 4px solid #557a95;
+        transition: 0.25s;
+        padding-left: 15px;
+    }
+    .sidebar-menu-container ul li a i {
+        font-size: 18px;
+        margin-right: 10px;
+        color: #4a4a4a;
+    }
+    .sidebar-menu-container ul li a:hover i,
+    .sidebar-menu-container ul li a.open i{
+        color: #557a95;
+    }
+    .dashboard-container {
+        background: linear-gradient(90deg, #e2e2e2 50%, transparent 50%);
+    }
+    .references-table{
+        color:#333;
+    }
+    .references-table i {
+        margin-right: 15px;
+    }
+    td.approved {
+        color: #069238;
+    }
+    td.rejected {
+        color: #a70606;
+    }
+    td.pending {
+        color: #ad7700;
+    }
+    .table thead th {
+        border-top: 0;
+    }
+    .send-mail:hover {
+        background: #333;
+    }
+    .send-mail {
+        background: #557a95;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+    .send-mail:hover{
+        background-color: #496c86;
+        color:#fff;
+    }
+    .references-table tbody tr td:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 9px;
+    }
+</style>
+
+<div class="container-fluid dashboard-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 siderbar">
+                <div class="user-header">
+                    <%
+                    let profilePic = user.profile_pic
+                    user.profile_pic = profilePic.replace('uploads\\', 'uploads/')
+                    %>
+                    <div class="user-profile-photo" style="background-image: url('/<%= user.profile_pic %>')">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name"><span style="text-transform: capitalize"><%= user.first_name %> <%= user.last_name %></span></div>
+                        <%
+                            if(activeRoute === 'dashboard_emp') {
+                                %>
+                                <div class="candidate-id"><%= user.employer_id %></div>
+                                <%
+                            }
+                            else {
+                                %>
+                                <div class="candidate-id"><%= user.candidate_id %></div>
+                                <%
+                            }
+                        %>
+                        <div class="candidate-id"><%= user.email %></div>
+                    </div>
+
+                </div>
+
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu">
+                        <li><a href="<%= baseRoute %>dashboard_emp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="<%= baseRoute %>dashboard_emp/profile_settings_emp"><i class="fa fa-cog" aria-hidden="true"></i> Profile Settings</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-9 main-content-area">
+                <h2>Welcome back <span style="text-transform: capitalize"><%= user.first_name %></span>! Lets get back to work.</h2>
+                <hr>
+                <div class="input-group" style="">
+                    <div class="form-outline" style="min-width: 600px;">
+                        <input type="search" id="search-can-id" class="form-control" style="border-radius: 0;width: 100%" placeholder="Enter Candidate ID">
+                    </div>
+                    <button type="button" class="btn btn-primary" style="border-radius: 0;margin-bottom: 22px;" onclick="searchCandidate()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+                <div id="can_id_not_found" style="display: none">
+                    <h2 style="color: #333333">Candidate ID not found.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS Scripts -->
+<%- include('../partials/footerIncludes') %>
+
+<script>
+    let getUrlParameter = function getUrlParameter(sParam) {
+        let sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    let canIDResult = getUrlParameter('can_id_not_found')
+    if(canIDResult === 'true') {
+        $('#can_id_not_found').css("display", "inline");
+    }
+</script>
+<script>
+    function searchCandidate() {
+        $.ajax({
+            url: "<%= baseRoute %>employer_subscription/check_subscription",
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({}),
+            success: (result) => {
+                if(result.msg === 'valid') {
+                    window.location.href = `<%= baseRoute %>dashboard_emp/candidate/${$('#search-can-id').val()}`
+                }
+                else if(result.msg === 'not valid') {
+                    stripeHandler.open({
+                        amount: 15 * 100
+                    })
+                }
+            }
+        })
+    }
+    let stripeHandler = StripeCheckout.configure({
+        key: stripePublicKey,
+        locale: 'auto',
+        currency: 'gbp',
+        token: (token) => {
+            $.ajax({
+                url: '<% baseRoute %>employer_subscription/purchase',
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    stripeTokenID: token.id,
+                    price: 15
+                }),
+                success: (result) => {
+                    if(result.msg === 'purchased') {
+                        alert('Complete')
+                    }
+                    else if(result.msg === 'failed') {
+                        alert('Failed')
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

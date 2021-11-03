@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Required meta tags always come first -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <!-- Theme Font -->
+    <link rel="preload" type="text/css" href="/css/theme-font.min.css" as="style">
+
+    <!-- Bootstrap CSS -->
+    <%
+        if(activeRoute === 'faq') {
+        %>
+        <link rel="stylesheet" type="text/css" href="/Bootstrap/dist/css/bootstrap5.css">
+        <%
+        }
+        else {
+        %>
+            <link rel="stylesheet" type="text/css" href="/Bootstrap/dist/css/bootstrap.css">
+        <%
+        }
+    %>
+
+    <!-- Main Styles CSS -->
+    <%
+        if(activeRoute === 'faq') {
+            %>
+            <link rel="stylesheet" type="text/css" href="/css/mainfaq.css">
+            <%
+        }
+        else {
+            %>
+            <link rel="stylesheet" type="text/css" href="/css/main.css">
+            <%
+        }
+    %>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="/js/jQuery/jquery-3.5.1.js"></script>
