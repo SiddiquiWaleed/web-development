@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>Admin Home</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+        <script src="/js/jQuery/jquery-3.5.1.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="add-faq-wrapper">
+                        <form method="POST" action="<%= baseRoute %>admin/add_faq">
+                            <div class="form-group">
+                                <label for="faq_question">FAQ Question</label>
+                                <input type="text" name="faq_question" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="faq_question">FAQ Answer</label>
+                                <textarea name="faq_answer" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group" style="display: flex; justify-content: space-evenly">
+                                <div>Candidate: <input type="radio" name="faq_type" value="Candidate" checked></div>
+                                <div>Employer: <input type="radio" name="faq_type" value="Employer"></div>
+                            </div>
+                            <div style="text-align: center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="show-faq-wrapper">
+                        <h2>All FAQ's</h2>
+                        <div class="faq-for-candidates-wrapper">
+                            <h3>FAQ For Candidates</h3>
+                            <%
+                                for(let i = 0; i < allCanFAQ.length; i++) {
+                                    %>
+                                    <h3><%= i+1 %></h3>
+                                    <div style="display: flex;align-items: center">
+                                        <div>
+                                            <p><%= allCanFAQ[i].faq_question %></p>
+                                            <p><%= allCanFAQ[i].faq_answer %></p>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-danger" data-id="<%= allCanFAQ[i].faq_id %>" onclick="deleteFAQ(<%= allCanFAQ[i].faq_id %>)">Delete</button>
+                                        </div>
+                                    </div>
+                                    <%
+                                }
+                            %>
+                        </div>
+                        <div class="faq-for-employers-wrapper">
+                            <h3>FAQ For Employers</h3>
+                            <%
+                            for(let i = 0; i < allEmpFAQ.length; i++) {
+                            %>
+                                <h3><%= i + 1 %></h3>
+                                <div style="display: flex;align-items: center">
+                                    <div>
+                                        <p><%= allEmpFAQ[i].faq_question %></p>
+                                        <p><%= allEmpFAQ[i].faq_answer %></p>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-danger" data-id="<%= allEmpFAQ[i].faq_id %>" onclick="deleteFAQ(<%= allEmpFAQ[i].faq_id %>)">Delete</button>
+                                    </div>
+                                </div>
+                            <%
+                            }
+                            %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        function deleteFAQ(faqId) {
+            $.ajax({
+                url: "<%= baseRoute %>admin/delete_faq",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    faqId: faqId
+                }),
+                success: (result) => {
+                    location.reload();
+                }
+            })
+        }
+    </script>
+    </body>
+</html>

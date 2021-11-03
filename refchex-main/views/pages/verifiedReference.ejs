@@ -1,0 +1,152 @@
+<%- include('../partials/headerIncludes') %>
+</head>
+<body class="body-bg-white">
+
+    <div class="stunning-header bg-primary-opacity">
+        <%- include('../partials/stunningHeader') %>
+        <div class="header-spacer--standard" style="height: 30px"></div>
+        <div class="content-bg-wrap stunning-header-bg1"></div>
+    </div>
+
+    <div style="background-color: #FFFFFF;width: 100%; height: 100vh;" id="add-ref-window">
+
+        <form class="content" style="display: flex;justify-content: space-around;">
+            <div class="row" style="padding: 20px 35px;">
+                <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div style="display: flex;justify-content: center;align-items: center;">
+                        <div>
+                            <h1>Reference Information</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div class="row">
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">Start Date</label>
+                            <input value="<%= reference.start_date %>" name="startDate" disabled style="border-radius: 10px;background-color: #e9ecef;"/>
+                            <span class="input-group-addon">
+                        <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                        </svg>
+                    </span>
+                        </div>
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">End Date</label>
+                            <input name="endDate" value="<%= reference.end_date %>" disabled style="border-radius: 10px;background-color: #e9ecef;"/>
+                            <span class="input-group-addon">
+                        <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                        </svg>
+                    </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">Your Name</label>
+                            <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_name %>">
+                        </div>
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">Your Surname</label>
+                            <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_surname %>">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">Address</label>
+                            <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_address %>">
+                        </div>
+                        <div class="col-6 form-group label-floating">
+                            <label class="control-label" style="left: 33px">Postal Code</label>
+                            <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_postal_code %>">
+                        </div>
+                    </div>
+
+                    <div class="form-group label-floating">
+                        <label class="control-label">Your Company Name</label>
+                        <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_company_name %>">
+                    </div>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Your Designation</label>
+                        <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_designation %>">
+                    </div>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Phone Number</label>
+                        <input class="form-control" placeholder="" type="text" disabled value="<%= reference.referee_phone_number %>">
+                    </div>
+
+                    <div id="verifiedDivResponse">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-12" style="padding-left: 0; padding-right: 0;">
+                            <div>
+                                <h4>
+                                    Reason For Leaving
+                                </h4>
+                            </div>
+                            <div class="ui-block" style="border: none">
+                                <div class="post__author author vcard inline-items" style="margin-bottom: 0;">
+                                    <div class="form-group with-icon-right is-empty" style="width: 100%;margin-bottom: 0;">
+                                        <textarea class="form-control" placeholder="Reason For Leaving" name="reasonForLeaving" disabled><%= reference.reason_for_leaving %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="padding-right: 0; padding-left: 0">
+                            <div>
+                                <h4>
+                                    Number of Sickness
+                                </h4>
+                            </div>
+                            <div class="form-group label-floating is-empty">
+                                <input disabled class="form-control" type="text" placeholder="" name="numberOfSickness" value="<%= reference.number_of_sickness %>">
+                            </div>
+                        </div>
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-12" style="padding-left: 0; padding-right: 0;">
+                            <div>
+                                <h4>
+                                    Warnings
+                                </h4>
+                            </div>
+                            <div class="ui-block" style="border: none">
+                                <div class="post__author author vcard inline-items" style="margin-bottom: 0;">
+                                    <div class="form-group with-icon-right is-empty" style="width: 100%;margin-bottom: 0;">
+                                        <textarea disabled class="form-control" placeholder="Any Warning on Candidates Records" name="warnings"><%= reference.warnings %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-12" style="padding-left: 0; padding-right: 0;">
+                            <div>
+                                <h4>
+                                    Investigations
+                                </h4>
+                            </div>
+                            <div class="ui-block" style="border: none">
+                                <div class="post__author author vcard inline-items" style="margin-bottom: 0;">
+                                    <div class="form-group with-icon-right is-empty" style="width: 100%;margin-bottom: 0;">
+                                        <textarea disabled class="form-control" placeholder="Is The Candidate Under Investigation For Any Matter" name="investigations"><%= reference.investigations %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-12" style="padding-left: 0; padding-right: 0;">
+                            <div>
+                                <h4>
+                                    Comments
+                                </h4>
+                            </div>
+                            <div class="ui-block" style="border: none">
+                                <div class="post__author author vcard inline-items" style="margin-bottom: 0;">
+                                    <div class="form-group with-icon-right is-empty" style="width: 100%;margin-bottom: 0;">
+                                        <textarea disabled class="form-control" placeholder="Comments" name="comments"><%= reference.comment %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="refID" value="<%= reference.reference_id %>">
+                </div>
+            </div>
+        </form>
+    </div>
+<%- include('../partials/footerIncludes') %>
+</body>
+</html>

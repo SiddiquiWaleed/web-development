@@ -1,0 +1,799 @@
+<%- include('../partials/headerIncludes') %>
+
+<link rel="stylesheet" href="/css/intlTelInput.css">
+<style>
+    #wrapper{font-family:Lato;font-size:1.5rem;text-align:center;box-sizing:border-box;color:#333}#wrapper #dialog{border:solid 1px #ccc;margin:10px auto;padding:20px 30px;display:inline-block;box-shadow:0 0 4px #ccc;background-color:#faf8f8;overflow:hidden;position:relative;max-width:850px}#wrapper #dialog h3{margin:0 0 10px;padding:0;line-height:1.25}#wrapper #dialog span{font-size:90%}#wrapper #dialog #form{max-width:400px;margin:25px auto 0}#wrapper #dialog #form input{margin:0 5px;text-align:center;line-height:80px;font-size:50px;border:solid 1px #ccc;box-shadow:0 0 5px #ccc inset;outline:0;width:13%;transition:all .2s ease-in-out;border-radius:3px}#wrapper #dialog #form input:focus{border-color:#557a95;box-shadow:0 0 5px #557a95 inset}#wrapper #dialog #form input::selection{background:0 0}#wrapper #dialog #form button{margin:30px 0 50px;width:50%;padding:10px;background-color:#557a95;border:none;text-transform:uppercase}#wrapper #dialog button.close{border:solid 2px;border-radius:30px;line-height:19px;font-size:120%;width:22px;position:absolute;right:5px;top:5px}#wrapper #dialog div{position:relative;z-index:1}#wrapper #dialog img{position:absolute;bottom:-70px;right:-63px}#form input{display:inline;padding:0}.lds-roller{display:inline-block;position:relative;width:80px;height:80px}.lds-roller div{animation:lds-roller 1.2s cubic-bezier(.5,0,.5,1) infinite;transform-origin:40px 40px}.lds-roller div:after{content:" ";display:block;position:absolute;width:7px;height:7px;border-radius:50%;background:#557a95;margin:-4px 0 0 -4px}.lds-roller div:nth-child(1){animation-delay:-36ms}.lds-roller div:nth-child(1):after{top:63px;left:63px}.lds-roller div:nth-child(2){animation-delay:-72ms}.lds-roller div:nth-child(2):after{top:68px;left:56px}.lds-roller div:nth-child(3){animation-delay:-108ms}.lds-roller div:nth-child(3):after{top:71px;left:48px}.lds-roller div:nth-child(4){animation-delay:-144ms}.lds-roller div:nth-child(4):after{top:72px;left:40px}.lds-roller div:nth-child(5){animation-delay:-.18s}.lds-roller div:nth-child(5):after{top:71px;left:32px}.lds-roller div:nth-child(6){animation-delay:-216ms}.lds-roller div:nth-child(6):after{top:68px;left:24px}.lds-roller div:nth-child(7){animation-delay:-252ms}.lds-roller div:nth-child(7):after{top:63px;left:17px}.lds-roller div:nth-child(8){animation-delay:-288ms}.lds-roller div:nth-child(8):after{top:56px;left:12px}@keyframes lds-roller{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+</style>
+</head>
+<body class="body-bg-white">
+<div id="wrapper" style="display: none!important; background: rgba(0,0,0,0.7);position: fixed; top: 0px; bottom: 0px;z-index: 100;width: 100%;height: 100vh;display: flex;align-items: center">
+    <div id="dialog">
+        <h3 style="display: inline">Please enter the 6-digit verification code we sent via Email</h3>
+        <i style="margin-left: 8px;cursor: pointer" class="fa fa-times" onclick="closeOTPDiv()"></i>
+        <div id="form">
+            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+            <input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" /><input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" /><input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" /><input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" /><input type="text" maxLength="1" size="1" min="0" max="9" pattern="[0-9]{1}" />
+            <button class="btn btn-primary btn-embossed" onclick="verifyOTP();">Verify</button>
+        </div>
+    </div>
+</div>
+
+<!-- Loading -->
+<div id="loading-wrapper" style="background: rgba(0,0,0,0.6);position: fixed;top: 0px; bottom: 0px;z-index: 100;width: 100%;height: 100vh;display: none;align-items: center;justify-content: center;">
+    <div class="lds-roller">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+</div>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-568DJSG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<!-- ... end Preloader -->
+<div class="main-header main-header-fullwidth main-header-has-header-standard">
+
+    <%- include('../partials/stunningHeader') %>
+
+    <div class="header-spacer--standard"></div>
+    <div class="content-bg-wrap bg-landing"></div>
+
+    <div class="container">
+        <div class="row display-flex">
+            <div class="col col-xl-5 col-lg-5 col-md-12 col-sm-12 col-12">
+                <div class="landing-content">
+                    <h1 style="color: #fff">The Most Complete Social Network is Here!</h1>
+                    <p style="color: #fff">We are the best and biggest social network with 5 billion active users all around the world. Share you
+                        thoughts, write blog posts, show your favourite music via Stopify, earn badges and much more!
+                    </p>
+                    <a href="/register" class="btn btn-md btn-border c-white" style="color: #fff">Register Now!</a>
+                </div>
+            </div>
+
+            <div class="col col-xl-5 ml-auto col-lg-6 col-md-12 col-sm-12 col-12">
+
+
+                <!-- Login-Registration Form  -->
+
+                <div class="registration-login-form">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#home" role="tab">
+                                <svg class="olymp-login-icon"><use xlink:href="#olymp-login-icon"></use></svg>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" style="max-height: 700px; overflow-y: auto;">
+                        <%
+                        if(register === 1) {
+                        %>
+
+                            <div class="tab-pane active" id="home" role="tabpanel">
+
+                                <form class="content" id="registration_form">
+                                    <div class="title h6">Register to RefChex
+                                        <div class="row pt-3" style="padding: 15px;">
+                                            <label for="candidate" class="col-6 employee-candidate-tab-header active" style="display: flex; align-items: center;padding: 10px;cursor: pointer;">
+                                                <input type="radio" name="register_type" id="candidate" value="candidate" checked style="width: 10%;cursor: pointer;">
+                                                <label for="candidate" style="width: 100%;margin-bottom: 0;cursor: pointer;margin-left: 5px">Candidate</label><br>
+                                            </label>
+                                            <label for="employer" class="col-6 employee-candidate-tab-header" style="display: flex;align-items: center;padding: 10px;cursor: pointer;">
+                                                <input type="radio" name="register_type" id="employer" value="employer" style="width: 10%;cursor: pointer;">
+                                                <label for="employer" style="width: 100%; margin-bottom: 0;cursor: pointer;margin-left: 5px">Employer</label><br>
+                                            </label>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $( ".employee-candidate-tab-header" ).click(function() {
+                                                $('#can-form').css("display", "none")
+                                                $('#emp-form').css("display", "none")
+
+                                                $(".employee-candidate-tab-header").removeClass("active");
+                                                $(this).addClass("active");
+                                                let registerType = $('input[name="register_type"]:checked').val();
+                                                if(registerType === 'candidate') {
+                                                    $('#can-form').css("display", "flex")
+                                                }
+                                                else {
+                                                    $('#emp-form').css("display", "flex")
+                                                }
+                                            });
+                                        </script>
+                                    </div>
+                                    <div class="row" id="can-form">
+                                        <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">First Name</label>
+                                                <input class="form-control" placeholder="" type="text" name="first_name" id="register_first_name">
+                                            </div>
+                                        </div>
+                                        <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Last Name</label>
+                                                <input class="form-control" placeholder="" type="text" name="last_name" id="register_last_name">
+                                            </div>
+                                        </div>
+                                        <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Email</label>
+                                                <input class="form-control" placeholder="" type="email" name="email" id="register_email" onkeyup="checkIfEmailAlreadyExists()">
+                                                <span style="color: #557A95;margin-left: 3px;display: none">Email Already Exists</span>
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Username</label>
+                                                <input class="form-control" placeholder="" type="text" name="username" id="register_username">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <input id="register_phone_can" name="phone" type="tel" class="form-control" style="padding:15px 50px">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Password</label>
+                                                <input class="form-control" placeholder="" type="password" name="password" id="register_password">
+                                            </div>
+
+                                            <div class="form-group date-time-picker label-floating">
+                                                <label class="control-label">Your Birthday</label>
+                                                <input name="datetimepicker" value="01/01/1995" id="register_birthday"/>
+                                                <span class="input-group-addon">
+															<svg class="olymp-calendar-icon"><use xlink:href="#olymp-calendar-icon"></use></svg>
+														</span>
+                                            </div>
+
+                                            <div class="form-group label-floating is-select">
+                                                <label class="control-label">Your Gender</label>
+                                                <select class="selectpicker form-control" id="register_gender">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+
+                                            <input type="submit" class="btn btn-primary btn-lg full-width" value="Complete Registration!" id="candidate_register_btn">
+                                        </div>
+                                    </div>
+
+                                    <div class="row" id="emp-form" style="display: none;">
+                                        <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">First Name</label>
+                                                <input class="form-control" placeholder="" type="text" id="register_first_name_emp">
+                                            </div>
+                                        </div>
+                                        <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Last Name</label>
+                                                <input class="form-control" placeholder="" type="text" id="register_last_name_emp">
+                                            </div>
+                                        </div>
+                                        <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Email</label>
+                                                <input class="form-control" placeholder="" type="email" id="register_email_emp">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Username</label>
+                                                <input class="form-control" placeholder="" type="text" id="register_username_emp">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Comapny Name</label>
+                                                <input class="form-control" placeholder="" type="text" id="register_company_name_emp">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Designation</label>
+                                                <input class="form-control" placeholder="" type="text" id="register_designation_emp">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <input id="register_phone_emp" name="phone" type="tel" class="form-control" style="padding:15px 50px">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Password</label>
+                                                <input class="form-control" placeholder="" type="password" id="register_password_emp">
+                                            </div>
+                                            <div class="form-group label-floating is-select">
+                                                <label class="control-label">Your Gender</label>
+                                                <select class="selectpicker form-control" id="register_gender_emp">
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                </select>
+                                            </div>
+                                            <input type="submit" class="btn btn-primary btn-lg full-width" value="Complete Registration!">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        <%
+                        }
+                        else {
+                        %>
+                            <div class="tab-pane active" id="profile" role="tabpanel">
+                                <div class="title h6" style="padding: 20px 26px;font-size: 25px;">Login to your Account</div>
+                                <form class="content" id="login-form" method="POST" action="<%= baseRoute %>login" onsubmit="return checkLoginForm();">
+                                    <div class="row">
+                                        <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Email or ID</label>
+                                                <input class="form-control" placeholder="" type="text" name="emailOrID" id="login-form-email-id">
+                                            </div>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Password</label>
+                                                <input class="form-control" placeholder="" type="password" name="password" id="login-form-password">
+                                            </div>
+
+                                            <div class="remember" style="margin: 0px 0 25px;">
+                                                <a href="#" class="forgot" data-toggle="modal" data-target="#restore-password">Forgot my Password</a>
+                                            </div>
+
+                                            <input type="submit" class="btn btn-lg btn-primary full-width mt-3" value="Login">
+                                            <p style="color: #000000">Don’t you have an account? <a href="/register">Register Now!</a> it’s really simple and you can start enjoing all the benefits!</p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        <%
+                        }
+                        %>
+
+                    </div>
+                </div>
+
+                <!-- ... end Login-Registration Form  -->
+            </div>
+        </div>
+    </div>
+
+    <!--    <img class="img-bottom" src="img/group-bottom.png" alt="friends">-->
+</div>
+
+
+<section class="medium-padding120">
+    <div class="container">
+        <div class="row" style="justify-content: space-around">
+            <div class="col col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+                <img loading="lazy" src="/img/Refchex Logo all grandient transparent.png" alt="screen">
+            </div>
+
+            <div class="col col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12" style="display: flex;justify-content: center;align-items: center">
+                <div class="crumina-module crumina-heading">
+                    <h2 class="heading-title">Why Join <span class="c-primary">RefChex</span>?</h2>
+                    <p style="color: #515365;font-size: 1.1rem;" class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<hr style="margin: 0px 20px;border-top: 2px solid rgba(0, 0, 0, 0.1);">
+<section class="medium-padding120">
+    <div class="container">
+        <div class="row">
+            <div class="col col-xl-4 col-lg-4 m-auto col-md-12 col-sm-12 col-12">
+                <div class="crumina-module crumina-heading">
+                    <h2 class="heading-title">Meet New People <span class="c-primary">all over the World</span></h2>
+                    <p style="color: #515365;font-size: 1.1rem;" class="heading-text">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident, sunt in culpa.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                <img loading="lazy" src="/img/social-media-3846597.png" alt="screen">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Section Subscribe Animation -->
+
+<section class="medium-padding100 subscribe-animation bg-users">
+    <div class="container">
+        <div class="row">
+            <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                <div class="crumina-module crumina-heading c-white custom-color">
+                    <h2 class="h1 heading-title">Olympus Newsletter</h2>
+                    <p class="heading-text">Subscribe to be the first one to know about updates, new features and much more!
+                    </p>
+                </div>
+
+
+                <!-- Subscribe Form  -->
+
+                <form class="form-inline subscribe-form" method="post">
+                    <div class="form-group label-floating is-empty">
+                        <label class="control-label">Enter your email</label>
+                        <input class="form-control bg-white" placeholder="" type="email">
+                    </div>
+
+                    <button class="btn btn-md btn-border c-white">Send</button>
+                </form>
+
+                <!-- ... end Subscribe Form  -->
+
+            </div>
+        </div>
+
+        <img loading="lazy" src="img/paper-plane.png" alt="plane" class="plane" data-aos="fade-right" data-aos-delay="200" data-aos-duration="700">
+    </div>
+</section>
+
+<div class="modal fade" id="registration-login-form-popup" tabindex="-1" role="dialog" aria-labelledby="registration-login-form-popup" aria-hidden="true">
+    <div class="modal-dialog window-popup registration-login-form-popup" role="document">
+        <div class="modal-content">
+            <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+                <svg class="olymp-close-icon"><use xlink:href="#olymp-close-icon"></use></svg>
+            </a>
+            <div class="modal-body">
+                <div class="registration-login-form">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#home1" role="tab">
+                                <svg class="olymp-login-icon">
+                                    <use xlink:href="#olymp-login-icon"></use>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#profile1" role="tab">
+                                <svg class="olymp-register-icon">
+                                    <use xlink:href="#olymp-register-icon"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home1" role="tabpanel">
+                            <div class="title h6">Register to Olympus</div>
+                            <form class="content">
+                                <div class="row">
+                                    <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">First Name</label>
+                                            <input class="form-control" placeholder="" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Last Name</label>
+                                            <input class="form-control" placeholder="" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Your Email</label>
+                                            <input class="form-control" placeholder="" type="email">
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Your Password</label>
+                                            <input class="form-control" placeholder="" type="password">
+                                        </div>
+
+                                        <div class="form-group date-time-picker label-floating">
+                                            <label class="control-label">Your Birthday</label>
+                                            <input name="datetimepicker" value="10/24/1984" />
+                                            <span class="input-group-addon">
+											<svg class="olymp-calendar-icon"><use xlink:href="#olymp-calendar-icon"></use></svg>
+										</span>
+                                        </div>
+
+                                        <div class="form-group label-floating is-select">
+                                            <label class="control-label">Your Gender</label>
+                                            <select class="selectpicker form-control">
+                                                <option value="MA">Male</option>
+                                                <option value="FE">Female</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="remember">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="optionsCheckboxes" type="checkbox">
+                                                    I accept the <a href="#">Terms and Conditions</a> of the website
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <a href="#" class="btn btn-purple btn-lg full-width">Complete Registration!</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane" id="profile1" role="tabpanel">
+                            <div class="title h6" style="padding: 20px 26px;font-size: 25px;">Login to your Account</div>
+                            <form class="content" method="POST" action="<%= baseRoute %> + 'login'">
+                                <div class="row">
+                                    <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Your Email</label>
+                                            <input class="form-control" placeholder="" type="text" required>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Your Password</label>
+                                            <input class="form-control" placeholder="" type="password" required>
+                                        </div>
+
+                                        <div class="remember">
+
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="optionsCheckboxes" type="checkbox">
+                                                    Remember Me
+                                                </label>
+                                            </div>
+                                            <a href="#" class="forgot" data-toggle="modal" data-target="#restore-password">Forgot my Password</a>
+                                        </div>
+
+                                        <input type="submit" class="btn btn-lg btn-primary full-width" value="Login">
+
+                                        <div class="or"></div>
+
+
+                                        <p>Don’t you have an account?
+                                            <a href="#">Register Now!</a> it’s really simple and you can start enjoing all the benefits!
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Window-popup Restore Password -->
+
+<div class="modal fade" id="restore-password" tabindex="-1" role="dialog" aria-labelledby="restore-password" aria-hidden="true">
+    <div class="modal-dialog window-popup restore-password-popup" role="document">
+        <div class="modal-content">
+            <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
+                <svg class="olymp-close-icon"><use xlink:href="#olymp-close-icon"></use></svg>
+            </a>
+
+            <div class="modal-header">
+                <h6 class="title">Restore your Password</h6>
+            </div>
+
+            <div class="modal-body">
+                <form  method="get">
+                    <p style="color: #515365">Enter your email and click the send code button. You’ll receive a code in your email. Please use that
+                        code below to change the old password for a new one.
+                    </p>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Your Email</label>
+                        <input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com">
+                    </div>
+                    <button class="btn btn-purple btn-lg full-width">Send me the Code</button>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Enter the Code</label>
+                        <input class="form-control" placeholder="" type="text" value="">
+                    </div>
+                    <div class="form-group label-floating">
+                        <label class="control-label">Your New Password</label>
+                        <input class="form-control" placeholder="" type="password" value="olympus">
+                    </div>
+                    <button class="btn btn-primary btn-lg full-width">Change your Password!</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ... end Window-popup Restore Password -->
+
+
+<a class="back-to-top">
+    <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+</a>
+
+
+<%- include('../partials/footerIncludes') %>
+
+<script src="/js/intlTelInput.js"></script>
+<script type="text/javascript">
+    let inputCanNum = document.querySelector("#register_phone_can");
+    let inputEmpNum = document.querySelector("#register_phone_emp");
+    window.intlTelInput(inputCanNum, {
+        separateDialCode: true,
+        utilsScript: "js/utils.js",
+    });
+    window.intlTelInput(inputEmpNum, {
+        separateDialCode: true,
+        utilsScript: "js/utils.js",
+    });
+</script>
+<script>
+    function checkFormValidation() {
+        let size = $('#registration_form input').length;
+        let formInputs = $('#registration_form input');
+        for(let i = 0; i < size; i++) {
+            $(formInputs[i]).css("border", "1px solid #e6ecf5");
+        }
+        for(let i = 0; i < size; i++) {
+            if($(formInputs[i]).val() === '') {
+                $(formInputs[i]).css("border", "2px solid red");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function allNumeric(str) {
+        if (typeof str != "string") {
+            return false;
+        }
+        return !isNaN(str) && !isNaN(parseFloat(str)) ;
+    }
+
+    function closeOTPDiv() {
+        $('#wrapper').css("display", "none");
+    }
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function checkIfEmailAlreadyExists() {
+        let email = $('#register_email').val();
+        if(validateEmail(email)) {
+            $.ajax({
+                url: "<%= baseRoute %>register/check_email",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    email: email
+                }),
+                success: (result) => {
+                    if(result.msg == 'exists') {
+                        $('#register_email').next().css("display", "inline");
+                        $('#candidate_register_btn').prop('disabled', true);
+                    }
+                    else {
+                        $('#register_email').next().css("display", "none");
+                        $('#candidate_register_btn').prop('disabled', false);
+                        document.getElementByC
+                    }
+                }
+            })
+        }
+    }
+
+    function checkLoginForm() {
+
+        let emailOrID = $('#login-form-email-id').val();
+        let password = $('#login-form-password').val();
+
+        if(emailOrID.length === 0) {
+            $('#login-form-email-id').parent().addClass("has-error");
+            return false;
+        }
+        if(password.length === 0) {
+            $('#login-form-password').parent().addClass("has-error");
+            return false;
+        }
+
+        // if(!allNumeric(emailOrID)) {
+        //     $('#login-form-email-id').parent().addClass("has-error");
+        //     return false;
+        // }
+        //
+        // if(emailOrID.includes("@")) {
+        //     if(!validateEmail(emailOrID)) {
+        //         $('#login-form-email-id').parent().addClass("has-error");
+        //         return false;
+        //     }
+        // }
+        return true;
+    }
+
+
+    $('#registration_form').submit((e) => {
+        e.preventDefault();
+
+        $('#loading-wrapper').css("display", "flex");
+
+        let registerType = $('input[name="register_type"]:checked').val();
+
+        if(registerType === 'candidate') {
+            let firstName = $('#register_first_name').val();
+            let lastName = $('#register_last_name').val();
+            let email = $('#register_email').val();
+            let username = $('#register_username').val();
+            let phone = $('.iti__selected-dial-code')[0].innerText + $('#register_phone_can').val();
+            let password = $('#register_password').val();
+            let birthday = $('#register_birthday').val().replaceAll("/", "-");
+            let gender = $('#register_gender').find(":selected").val();
+
+            let dateArr = birthday.split("-");
+            let year = dateArr[2];
+            let day = dateArr[0];
+
+            birthday = `${year}-${dateArr[1]}-${day}`;
+
+            console.log(JSON.stringify({
+                registerType: registerType,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                username: username,
+                phone: phone,
+                password: password,
+                birthday: birthday,
+                gender: gender
+            }))
+
+            $.ajax({
+                url: "<%= baseRoute %>register/generate_otp",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    registerType: registerType,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    username: username,
+                    phone: phone,
+                    password: password,
+                    birthday: birthday,
+                    gender: gender
+                }),
+                success: (result) => {
+                    if(result.status === 250) {
+                        $('#loading-wrapper').css("display", "none");
+                        $('#wrapper').css("display", "flex");
+                    }
+                    else if(result.status === -1){
+                        alert("Email Not Sent.. Some Error Occured");
+                    }
+                }
+            })
+        }
+        else {
+            let firstName = $('#register_first_name_emp').val();
+            let lastName = $('#register_last_name_emp').val();
+            let email = $('#register_email_emp').val();
+            let username = $('#register_username_emp').val();
+            let companyName = $('#register_company_name_emp').val();
+            let designation = $('#register_designation_emp').val();
+            let phone = $('.iti__selected-dial-code')[1].innerText + $('#register_phone_emp').val();
+            let password = $('#register_password_emp').val();
+            let gender = $('#register_gender_emp').find(":selected").val();
+
+            console.log(JSON.stringify({
+                registerType: registerType,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                username: username,
+                companyName: companyName,
+                designation: designation,
+                phone: phone,
+                password: password,
+                gender: gender
+            }))
+
+            $.ajax({
+                url: "<%= baseRoute %>register/generate_otp",
+                method: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    registerType: registerType,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    username: username,
+                    companyName: companyName,
+                    designation: designation,
+                    phone: phone,
+                    password: password,
+                    gender: gender
+                }),
+                success: (result) => {
+                    if(result.status === 250) {
+                        $('#loading-wrapper').css("display", "none");
+                        $('#wrapper').css("display", "flex");
+                    }
+                    else if(result.status === -1){
+                        alert("Email Not Sent.. Some Error Occured");
+                    }
+                }
+            })
+        }
+
+    })
+
+    function verifyOTP() {
+        let inputs = $('#form input');
+        code = "";
+        for(let i = 0; i < inputs.length; i++) {
+            code += $(inputs[i]).val();
+        }
+        $.ajax({
+            url: "<%= baseRoute %>register/verifyotp",
+            method: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                code: Number(code)
+            }),
+            success: (result) => {
+                // OTP verified
+                if(result.status === 200) {
+                    alert("OTP verified");
+                    window.location.replace("<%= baseRoute %>register/firstTimeSettings");
+                }
+                // OTP expired
+                else if(result.status === 900){
+                    alert("OTP expired");
+                }
+                // OTP not verified
+                else {
+                    alert("OTP Wrong");
+                }
+            }
+        })
+    }
+</script>
+<script type="text/javascript">
+    $(function() {
+        'use strict';
+        let body = $('#wrapper');
+        function goToNextInput(e) {
+            var key = e.which,
+                t = $(e.target),
+                sib = t.next('input');
+
+            if (key != 9 && (key < 48 || key > 57)) {
+                e.preventDefault();
+                return false;
+            }
+
+            if (key === 9) {
+                return true;
+            }
+
+            if (!sib || !sib.length) {
+                sib = body.find('input').eq(0);
+            }
+            sib.select().focus();
+        }
+
+        function onKeyDown(e) {
+            var key = e.which;
+
+            if (key === 9 || (key >= 48 && key <= 57)) {
+                return true;
+            }
+
+            e.preventDefault();
+            return false;
+        }
+
+        function onFocus(e) {
+            $(e.target).select();
+        }
+
+        body.on('keyup', 'input', goToNextInput);
+        body.on('keydown', 'input', onKeyDown);
+        body.on('click', 'input', onFocus);
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<%- include('../partials/headerIncludes') %>
+
+
+</head>
+<body class="body-bg-white">
+
+<!-- Stunning header -->
+
+<div class="stunning-header bg-primary-opacity">
+
+	<%- include('../partials/stunningHeader') %>
+	<div class="header-spacer--standard"></div>
+	<div class="stunning-header-content">
+		<h1 class="stunning-header-title">Contact</h1>
+	</div>
+	<div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+
+<!-- End Stunning header -->
+
+
+<section class="mt-0">
+	<div class="section">
+
+		<!----------------------------------------------- Map --------------------------------------------------------->
+
+		<div id="map" style="height: 480px"></div>
+
+		<!-- JS library for Map Leaflet -->
+		<script src="/js/libs/leaflet.min.js"></script>
+		<script src="/js/libs/MarkerClusterGroup.min.js"></script>
+		<!-- ...end JS library for Map Leaflet -->
+
+		<!-- JS-init for Map -->
+		<script>
+
+			/* -----------------------
+  				* Create the map
+  				* https://leafletjs.com/
+  			* --------------------- */
+
+			maps = {
+				maps: {
+					mapUSA: {
+						config: {
+							id: 'map',
+							map: {
+								center: new L.LatLng(38.897663, -77.036575),
+								zoom: 12,
+								maxZoom: 18,
+								layers: new L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+									maxZoom: 16,
+									attribution: ''
+								})
+							},
+							icon: {
+								iconSize  : [36, 54],
+								iconAnchor: [22, 94],
+								className : 'icon-map'
+							}
+						},
+						markers: [
+							{
+								coords: [38.897663, -77.036575],
+								icon: 'map-marker.png'
+							}
+						]
+					}
+				},
+				init: function () {
+					var _this = this;
+
+					for (var key in this.maps) {
+						var data = this.maps[key];
+
+						if (!data.config || !data.markers) {
+							continue;
+						}
+
+						if (!document.getElementById(data.config.id)) {
+							continue;
+						}
+
+						var map = new L.map(data.config.id, data.config.map);
+						var cluster = L.markerClusterGroup({
+							iconCreateFunction: function (cluster) {
+								var childCount = cluster.getChildCount();
+								var config = data.config.cluster;
+								return new L.DivIcon({
+									html: '<div><span>' + childCount + '</span></div>',
+									className: 'marker-cluster marker-cluster-' + key,
+									iconSize: new L.Point(config.iconSize[0], config.iconSize[1])
+								});
+							}
+						});
+						data.markers.forEach(function (item) {
+							data.config.icon['iconUrl'] = './img/' + item.icon;
+							var icon = L.icon(data.config.icon);
+
+							var marker = L.marker(item.coords, {icon: icon});
+							cluster.addLayer(marker);
+						});
+
+						map.addLayer(cluster);
+						this.disableScroll(jQuery("#" + data.config.id), map);
+					}
+				},
+				disableScroll: function ($map, map) {
+					map.scrollWheelZoom.disable();
+
+					$map.bind('mousewheel DOMMouseScroll', function (event) {
+						event.stopPropagation();
+						if (event.ctrlKey == true) {
+							event.preventDefault();
+							map.scrollWheelZoom.enable();
+							setTimeout(function () {
+								map.scrollWheelZoom.disable();
+							}, 1000);
+						} else {
+							map.scrollWheelZoom.disable();
+						}
+					});
+				}
+			};
+
+			document.addEventListener("DOMContentLoaded", function() {
+				maps.init();
+			});
+		</script>
+
+		<!-- ... end JS-init for Map -->
+
+		<!------------------------------------------- ... end Map ----------------------------------------------------->
+
+	</div>
+</section>
+
+
+<section class="medium-padding120">
+	<div class="container">
+		<div class="row">
+			<div class="col col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+
+				
+				<!-- Contact Item -->
+				
+				<div class="contact-item-wrap">
+					<h3 class="contact-title">Olympus HQ</h3>
+					<div class="contact-item">
+						<a href="#">254 W58th St, New York NY 10001, USA</a>
+					</div>
+					<div class="contact-item">
+						<h6 class="sub-title">General Inquiries:</h6>
+						<a href="mailto:">hqinquiries@olympus.com</a>
+					</div>
+				</div>
+				
+				<!-- ... end Contact Item -->
+			</div>
+
+			<div class="col col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+
+				
+				<!-- Contact Item -->
+				
+				<div class="contact-item-wrap">
+					<h3 class="contact-title">Press and Media</h3>
+					<div class="contact-item">
+						<h6 class="sub-title">Jenny Stevens:</h6>
+						<a href="mailto:">jennymedia@olympus.com</a>
+					</div>
+					<div class="contact-item">
+						<h6 class="sub-title">Skype:</h6>
+						<a href="#">Stevens Press</a>
+					</div>
+				</div>
+				
+				<!-- ... end Contact Item -->
+
+			</div>
+			<div class="col col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+
+				
+				<!-- Contact Item -->
+				
+				<div class="contact-item-wrap">
+					<h3 class="contact-title">Business Chat</h3>
+					<div class="contact-item">
+						<h6 class="sub-title">Marc Jackson:</h6>
+						<a href="mailto:">jacksonbusiness@olympus.com</a>
+					</div>
+					<div class="contact-item">
+						<h6 class="sub-title">Skype:</h6>
+						<a href="#">Jackson Business</a>
+					</div>
+				</div>
+				
+				<!-- ... end Contact Item -->
+
+			</div>
+			<div class="col col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12">
+
+				
+				<!-- Contact Item -->
+				
+				<div class="contact-item-wrap">
+					<h3 class="contact-title">Human Resources</h3>
+					<div class="contact-item">
+						<h6 class="sub-title">Stella Karenson:</h6>
+						<a href="mailto:">stellahhrr@olympus.com</a>
+					</div>
+					<div class="contact-item">
+						<h6 class="sub-title">Skype:</h6>
+						<a href="#">Karenson HHRR</a>
+					</div>
+				</div>
+				
+				<!-- ... end Contact Item -->
+
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section class="medium-padding120 bg-body contact-form-animation">
+	<div class="container">
+		<div class="row">
+			<div class="col col-xl-10 col-lg-10 col-md-12 col-sm-12  m-auto">
+
+				
+				<!-- Contacts Form -->
+				
+				<div class="contact-form-wrap">
+					<div class="contact-form-thumb">
+						<h2 class="title">SEND US <span>A RAVEN</span></h2>
+						<p>Do you have general questions about Olympus Social Network? Send us a raven and we’ll answer you as fast as we can!</p>
+						<img loading="lazy" src="/img/crew.webp" alt="crew" class="crew" data-aos="fade-right" data-aos-delay="200" data-aos-duration="500" width="104" height="119">
+					</div>
+					<form class="contact-form">
+						<div class="row">
+							<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group label-floating">
+									<label class="control-label">First Name</label>
+									<input class="form-control" placeholder="" type="text" value="James">
+								</div>
+							</div>
+							<div class="col col-12 col-xl-6 col-lg-6 col-md-6 col-sm-12">
+								<div class="form-group label-floating">
+									<label class="control-label">Last Name</label>
+									<input class="form-control" placeholder="" type="text" value="Spiegel">
+								</div>
+							</div>
+							<div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+								<div class="form-group label-floating">
+									<label class="control-label">Your Email</label>
+									<input class="form-control" placeholder="" type="email" value="james-spiegel@yourmail.com">
+								</div>
+				
+								<div class="form-group label-floating is-select">
+									<label class="control-label">Inquiry Subject</label>
+									<select class="form-select">
+										<option value="AC">Olympus Account Inquiries</option>
+										<option value="AC">Olympus Account Inquiries</option>
+									</select>
+								</div>
+				
+								<div class="form-group">
+									<textarea class="form-control" placeholder="Your Message"></textarea>
+								</div>
+				
+								<button class="btn btn-purple btn-lg full-width">Send Message</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				
+				<!-- ... end Contacts Form -->
+
+			</div>
+		</div>
+	</div>
+
+	<div class="half-height-bg bg-white"></div>
+</section>
+
+<!-- Window-popup Restore Password -->
+
+
+<!-- Footer Full Width -->
+
+<div class="footer footer-full-width" id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col col-lg-4 col-md-4 col-sm-12 col-12">
+
+				
+				<!-- Widget About -->
+				
+				<!-- ... end Widget About -->
+
+			</div>
+
+			
+				
+				<!-- SUB Footer -->
+				
+				<!-- ... end SUB Footer -->
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ... end Footer Full Width -->
+
+
+
+
+<!-- Window-popup-CHAT for responsive min-width: 768px -->
+
+<div class="ui-block popup-chat popup-chat-responsive" tabindex="-1" role="dialog" aria-labelledby="popup-chat-responsive" aria-hidden="true">
+
+	<div class="modal-content">
+		<div class="modal-header">
+			<span class="icon-status online"></span>
+			<h6 class="title" >Chat</h6>
+			<div class="more">
+				<svg class="olymp-three-dots-icon"><use xlink:href="#olymp-three-dots-icon"></use></svg>
+				<svg class="olymp-little-delete js-chat-open"><use xlink:href="#olymp-little-delete"></use></svg>
+			</div>
+		</div>
+		<div class="modal-body" style="background-color: rgba(85, 122, 149, 0.95);">
+			<div class="mCustomScrollbar">
+				<ul class="notification-list chat-message chat-message-field">
+					<li>
+						<div class="author-thumb">
+							<img loading="lazy" src="img/avatar14-sm.webp" width="28" height="28" alt="author" class="mCS_img_loaded">
+						</div>
+						<div class="notification-event">
+							<span class="chat-message-item">Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
+							<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">Yesterday at 8:10pm</time></span>
+						</div>
+					</li>
+
+					<li>
+						<div class="author-thumb">
+							<img loading="lazy" src="img/author-page.webp" width="36" height="36" alt="author" class="mCS_img_loaded">
+						</div>
+						<div class="notification-event">
+							<span class="chat-message-item">Don’t worry Mathilda!</span>
+							<span class="chat-message-item">I already bought everything</span>
+							<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">Yesterday at 8:29pm</time></span>
+						</div>
+					</li>
+
+					<li>
+						<div class="author-thumb">
+							<img loading="lazy" src="img/avatar14-sm.webp" width="28" height="28" alt="author" class="mCS_img_loaded">
+						</div>
+						<div class="notification-event">
+							<span class="chat-message-item">Hi James! Please remember to buy the food for tomorrow! I’m gonna be handling the gifts and Jake’s gonna get the drinks</span>
+							<span class="notification-date"><time class="entry-date updated" datetime="2004-07-24T18:18">Yesterday at 8:10pm</time></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<form class="need-validation">
+
+
+
+	</form>
+		</div>
+	</div>
+
+</div>
+
+<!-- ... end Window-popup-CHAT for responsive min-width: 768px -->
+
+
+
+<a class="back-to-top">
+    <img src="svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+</a>
+
+
+
+
+<%- include('../partials/footerIncludes.ejs') %>

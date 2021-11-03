@@ -1,0 +1,317 @@
+<%- include('../partials/headerIncludes') %>
+<style>
+    h1 {
+        font-size: 20px;
+        text-align: center;
+        margin: 20px 0 20px;
+    }
+    h1 small {
+        display: block;
+        font-size: 15px;
+        padding-top: 8px;
+        color: gray;
+    }
+    .avatar-upload {
+        position: relative;
+        max-width: 205px;
+        margin: 50px auto;
+    }
+    .avatar-upload .avatar-edit {
+        position: absolute;
+        right: 12px;
+        z-index: 1;
+        top: 10px;
+    }
+    .avatar-upload .avatar-edit input {
+        display: none;
+    }
+    .avatar-upload .avatar-edit input + label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #FFFFFF;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all .2s ease-in-out;
+    }
+    .avatar-upload .avatar-edit input + label:hover {
+        background: #f1f1f1;
+        border-color: #d6d6d6;
+    }
+    .avatar-upload .avatar-edit input + label:after {
+        font-family: 'FontAwesome';
+        color: #757575;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: auto;
+    }
+    .avatar-upload .avatar-preview {
+        width: 192px;
+        height: 192px;
+        position: relative;
+        border-radius: 100%;
+        border: 6px solid #F8F8F8;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1);
+    }
+    .avatar-upload .avatar-preview > div {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+</style>
+</head>
+
+<body class="page-has-left-panels page-has-right-panels">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-568DJSG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+<!-- Your Account Personal Information -->
+<form method="POST" enctype="multipart/form-data" id="data">
+    <div class="container" style="max-width: 960px;margin: 30px auto;padding: 20px;padding: 0">
+        <div class="avatar-upload">
+            <div class="avatar-edit">
+                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" name="imageUpload"/>
+                <label for="imageUpload" style="display: flex;justify-content: center;align-items: center">
+                    <i class="fa fa-pencil" style="color: #0b0b0b"></i>
+                </label>
+            </div>
+            <div class="avatar-preview">
+                <%
+                if(newUser.gender === 'female') {
+                %>
+                    <div id="imagePreview" style="background-image: url('/img/default-female-avatar.jpg');">
+                    </div>
+                <%
+                }
+                else {
+                %>
+                    <div id="imagePreview" style="background-image: url('/img/default-male-avatar.png');">
+                    </div>
+                <%
+                }
+                %>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" style="justify-content: center;">
+            <div class="col col-xl-9 order-xl-2 col-lg-9 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+                <div class="ui-block">
+                    <div class="ui-block-title">
+                        <h6 class="title">Personal Information</h6>
+                    </div>
+                    <div class="ui-block-content">
+
+
+                        <!-- Personal Information Form  -->
+
+                            <div class="row">
+
+                                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">First Name</label>
+                                        <input class="form-control" placeholder="" type="text" value="<%= newUser.first_name %>" name="firstName" disabled>
+                                    </div>
+
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Your Email</label>
+                                        <input class="form-control" placeholder="" type="email" value="<%= newUser.email %>" name="email" disabled>
+                                    </div>
+
+                                    <%
+                                        if(newUser.registerType === 'employer') {
+                                            %>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Your Comapny Name</label>
+                                                <input class="form-control" placeholder="" type="text" value="<%= newUser.companyName %>" name="companyName" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea id="address" class="form-control" placeholder="Address" name="address"></textarea>
+                                            </div>
+                                            <%
+                                        }
+                                    %>
+
+
+                                    <%
+                                        if(newUser.registerType === 'candidate') {
+                                            %>
+                                            <div class="form-group date-time-picker label-floating">
+                                                <label class="control-label">Your Birthday</label>
+                                                <%
+                                                    if(newUser.registerType === 'candidate') {
+                                                        let dateArr = newUser.birthday.split("-")
+                                                        let year = dateArr[0]
+                                                        let day = dateArr[2]
+
+                                                        newUser.birthday = `${day}-${dateArr[1]}-${year}`
+                                                    }
+                                                %>
+                                                <input name="birthday" value="<%= newUser.birthday.replace(/-/g,"/") %>" disabled/>
+                                                <span class="input-group-addon">
+                                                <svg class="olymp-month-calendar-icon icon"><use xlink:href="#olymp-month-calendar-icon"></use></svg>
+                                            </span>
+                                            </div>
+                                            <%
+                                        }
+                                    %>
+                                </div>
+
+                                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Last Name</label>
+                                        <input class="form-control" placeholder="" type="text" value="<%= newUser.last_name %>" name="lastName" disabled>
+                                    </div>
+
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Your Username</label>
+                                        <input class="form-control" placeholder="" type="text" value="<%= newUser.username %>" name="username" disabled>
+                                    </div>
+
+                                    <%
+                                        if(newUser.registerType === 'employer') {
+                                            %>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Your Designation</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= newUser.designation %>" name="username" disabled>
+                                                </div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Postal Code</label>
+                                                    <input class="form-control" placeholder="" type="text" name="postalCode">
+                                                </div>
+                                            <%
+                                        }
+                                    %>
+
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Your Phone Number</label>
+                                        <input class="form-control" placeholder="" type="text" value="<%= newUser.phone %>" name="phone" disabled>
+                                    </div>
+                                </div>
+                                <%
+                                    if(newUser.registerType === 'candidate') {
+                                        %>
+                                            <div class="col col-lg-4 col-md-4 col-sm-12 col-12">
+                                                <label class="control-label">Your IIN</label>
+                                                <input class="form-control" placeholder="Your International Insurance Number" type="text" name="iin">
+                                            </div>
+                                        <%
+                                    }
+                                %>
+                                <div class="col col-lg-4 col-md-4 col-sm-12 col-12">
+
+                                </div>
+                                <div class="col col-lg-4 col-md-4 col-sm-12 col-12">
+
+                                </div>
+                                <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+
+                                    <div class="form-group label-floating is-select">
+                                        <label class="control-label">Your Gender</label>
+                                        <select class="selectpicker form-control" name="gender" disabled>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                    </div>
+
+                                    <%
+                                        if(newUser.registerType === 'candidate') {
+                                            %>
+                                            <div class="form-group">
+                                                <textarea id="bio" class="form-control" placeholder="Write a little description about you" name="bio"></textarea>
+                                            </div>
+                                            <%
+                                        }
+                                    %>
+                                </div>
+                                <%
+                                if(newUser.registerType === 'candidate') {
+                                    %>
+                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="form-group">
+                                            <textarea id="address" class="form-control" placeholder="Your Address" name="address"></textarea>
+                                        </div>
+                                    </div>
+                                    <%
+                                }
+                                %>
+
+                                <div class="col col-lg-12 col-md-12 col-sm-12 col-12" style="text-align: center">
+                                    <button class="btn btn-primary btn-lg full-width" type="submit" style="width: 50%">Save all Changes</button>
+                                </div>
+
+                            </div>
+
+                        <!-- ... end Personal Information Form  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- ... end Your Account Personal Information -->
+
+<a class="back-to-top" href="#">
+    <img src="/svg-icons/back-to-top.svg" alt="arrow" class="back-icon">
+</a>
+
+<%- include('../partials/footerIncludes') %>
+
+<script>
+    $("#data").submit(function(e) {
+        e.preventDefault();
+
+        let formDetails = document.getElementById('data')
+        let formData = new FormData(formDetails);
+
+        $.ajax({
+            url: "<%= baseRoute %>register/register_new_user",
+            type: 'POST',
+            data: formData,
+            success: (result) => {
+                if(result.msg === 'go to can dashboard') {
+                    window.location.href = "<%= baseRoute %>dashboard_can"
+                }
+                else {
+                    window.location.href = "<%= baseRoute %>dashboard_emp"
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+</script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function() {
+        readURL(this);
+    });
+</script>
+</body>
+</html>

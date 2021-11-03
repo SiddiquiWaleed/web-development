@@ -1,0 +1,572 @@
+<%- include('../partials/headerIncludes') %>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+    let stripePublicKey = "<%= stripePublicKey %>"
+</script>
+<style>
+    h1 {
+        font-size: 20px;
+        text-align: center;
+        margin: 20px 0 20px;
+    }
+    h1 small {
+        display: block;
+        font-size: 15px;
+        padding-top: 8px;
+        color: gray;
+    }
+    .avatar-upload {
+        position: relative;
+        max-width: 205px;
+        margin: 50px auto;
+    }
+    .avatar-upload .avatar-edit {
+        position: absolute;
+        right: 12px;
+        z-index: 1;
+        top: 10px;
+    }
+    .avatar-upload .avatar-edit input {
+        display: none;
+    }
+    .avatar-upload .avatar-edit input + label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #FFFFFF;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all .2s ease-in-out;
+    }
+    .avatar-upload .avatar-edit input + label:hover {
+        background: #f1f1f1;
+        border-color: #d6d6d6;
+    }
+    .avatar-upload .avatar-edit input + label:after {
+        font-family: 'FontAwesome';
+        color: #757575;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: auto;
+    }
+    .avatar-upload .avatar-preview {
+        width: 192px;
+        height: 192px;
+        position: relative;
+        border-radius: 100%;
+        border: 6px solid #F8F8F8;
+        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.1);
+    }
+    .avatar-upload .avatar-preview > div {
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+</style>
+</head>
+<body>
+
+<div style="background-color: #FFFFFF;position: fixed;top: -2000px; bottom: 0px;z-index: 100; width: 100%; height: 100vh;" id="add-ref-window">
+    <form id="add-ref-form" class="content" style="display: flex;justify-content: space-around;" enctype="multipart/form-data">
+        <div>
+            <img src="img/add-ref-window-img.png" style="height: 100%;max-width: 450px;width: 100%;object-fit: cover;vertical-align: middle;border: 0;">
+        </div>
+        <div class="row" style="padding: 20px 35px;overflow-y: auto; height: 100vh;">
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div style="display: flex;justify-content: space-between;align-items: center">
+                    <div>
+                        <h1>Add New Reference</h1>
+                    </div>
+                    <div>
+                        <button id="close-add-ref-window-btn" style="border: none;border-radius: 10px;cursor: pointer;background-color: rgb(255, 255, 255);">
+                            <img src="svg-icons/close.svg" alt="arrow" class="back-icon" width="20" height="20">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="row">
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">Start Date</label>
+                        <input value="10/24/1984" name="startDate" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="col-6 form-group label-floating">
+                        <label class="control-label" style="left: 33px">End Date</label>
+                        <input name="endDate" value="10/24/1984" style="border-radius: 10px"/>
+                        <span class="input-group-addon">
+                            <svg class="olymp-calendar-icon" style="margin-right: 10px"><use xlink:href="#olymp-calendar-icon"></use>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Email of Referee</label>
+                    <input class="form-control" placeholder="" type="email" name="refereeEmail">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Title</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeTitle">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Surname</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeSurname">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Name</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeName">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Company Name</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeCompanyName">
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Referee Designation</label>
+                    <input class="form-control" placeholder="" type="text" name="refereeDesignation">
+                </div>
+                <div class="row">
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Address</label>
+                        <input class="form-control" placeholder="" type="text" name="refereeAddress">
+                    </div>
+                    <div class="form-group label-floating col-6">
+                        <label class="control-label" style="left: 33px">Postal Code</label>
+                        <input class="form-control" placeholder="" type="text" name="refereePostalCode">
+                    </div>
+                </div>
+                <div class="form-group label-floating">
+                    <label class="control-label">Phone Number</label>
+                    <input class="form-control" placeholder="" type="text" name="refereePhoneNumber">
+                </div>
+                <div class="form-group label-floating is-focused">
+                    <label class="control-label">Attach Documents</label>
+                    <input class="form-control" type="file" multiple name="refereeDocuments">
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-lg btn-primary full-width">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="stunning-header bg-primary-opacity">
+    <%- include('../partials/stunningHeader') %>
+    <div class="header-spacer--standard" style="height: 30px"></div>
+    <div class="content-bg-wrap stunning-header-bg1"></div>
+</div>
+<style>
+    .user-header .user-info .candidate-id {
+        color: #929292;
+        font-size: 15px;
+    }
+
+    .user-header .user-info .user-name {
+        color: #333;
+        font-weight: 600;
+        font-size: 20px;
+        margin-top: -5px;
+    }
+    .user-header .user-profile-photo {
+        width: 50px;
+        margin-right: 5%;
+        height: 50px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+    }
+    .user-header .user-profile-photo {
+        width: 20%;
+        margin-right: 5%;
+    }
+    .user-header {
+        display: flex;
+        padding: 25px;
+        background: #e2e2e2;
+    }
+    .siderbar{
+        background: #e2e2e2;
+        border-right: 1px solid #d0d0d0;
+        padding-top: 40px;
+        height: 100vh;
+    }
+    .main-content-area{
+        padding: 60px 40px;
+        background-color: #fff;
+    }
+    .add-refference-btn{
+        background-color: #557A95;
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 7px;
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+        margin: 0 25px;
+        font-size: 16px;
+        margin-bottom: 25px;
+    }
+    .add-refference-btn:hover {
+        background-color: #496c86;
+        color: #fff;
+    }
+    .sidebar-menu-container ul li a {
+        font-size: 16px;
+        margin-bottom: 16px;
+        display: block;
+        color: #333;
+    }
+
+    .sidebar-menu-container {
+        padding: 25px;
+    }
+    .sidebar-menu-container ul li a:hover,
+    .sidebar-menu-container ul li a.open{
+        font-weight: 600;
+        border-left: 4px solid #557a95;
+        transition: 0.25s;
+        padding-left: 15px;
+    }
+    .sidebar-menu-container ul li a i {
+        font-size: 18px;
+        margin-right: 10px;
+        color: #4a4a4a;
+    }
+    .sidebar-menu-container ul li a:hover i,
+    .sidebar-menu-container ul li a.open i{
+        color: #557a95;
+    }
+    .dashboard-container {
+        background: linear-gradient(90deg, #e2e2e2 50%, transparent 50%);
+    }
+    .references-table{
+        color:#333;
+    }
+    .references-table i {
+        margin-right: 15px;
+    }
+    td.approved {
+        color: #069238;
+    }
+    td.rejected {
+        color: #a70606;
+    }
+    td.pending {
+        color: #ad7700;
+    }
+    .table thead th {
+        border-top: 0;
+    }
+    .send-mail:hover {
+        background: #333;
+    }
+    .send-mail {
+        background: #557a95;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 5px;
+    }
+    .send-mail:hover{
+        background-color: #496c86;
+        color:#fff;
+    }
+    .references-table tbody tr td:last-child {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 9px;
+    }
+</style>
+
+<div class="container-fluid dashboard-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 siderbar">
+                <div class="user-header">
+                    <%
+                    let profilePic = user.profile_pic
+                    user.profile_pic = profilePic.replace('uploads\\', 'uploads/')
+                    %>
+                    <div class="user-profile-photo" style="background-image: url('/<%= user.profile_pic %>')">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name"><span style="text-transform: capitalize"><%= user.first_name %> <%= user.last_name %></span></div>
+                        <div class="candidate-id"><%= user.candidate_id %></div>
+                        <div class="candidate-id"><%= user.email %></div>
+                    </div>
+
+                </div>
+                <a class="add-refference-btn" id="add-ref-btn" href="#">Add a Reference</a>
+
+                <div class="sidebar-menu-container">
+                    <ul class="sidebar-menu">
+                        <li><a href="<%= baseRoute %>dashboard_can"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+                        <li><a href="<%= baseRoute %>dashboard_can/profile_settings_can"><i class="fa fa-cog" aria-hidden="true"></i> Profile Settings</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="col-md-9 main-content-area">
+                <h2>You can change your settings here <span style="text-transform: capitalize"><%= user.first_name %></span>.</h2>
+                <hr>
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-xl-12 order-xl-2 col-lg-12 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+                            <div class="ui-block">
+                                <div class="ui-block-title">
+                                    <h6 class="title">Personal Information</h6>
+                                </div>
+                                <div class="ui-block-content">
+
+                                    <form id="change-settings">
+                                        <div class="row" style="justify-content: center">
+                                            <div class="container" style="max-width: 960px;">
+                                                <div class="avatar-upload">
+                                                    <div class="avatar-edit">
+                                                        <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" name="imageUpload"/>
+                                                        <label for="imageUpload" style="display: flex;justify-content: center;align-items: center">
+                                                            <i class="fa fa-pencil" style="color: #0b0b0b"></i>
+                                                        </label>
+                                                    </div>
+                                                    <div class="avatar-preview">
+                                                        <%
+                                                            if(user.profile_pic) {
+                                                                %>
+                                                                <div id="imagePreview" style="background-image: url('/<%= user.profile_pic %>');">
+                                                                </div>
+                                                                <%
+                                                            }
+                                                            else if(newUser.gender === 'female') {
+                                                                %>
+                                                                <div id="imagePreview" style="background-image: url('/img/default-female-avatar.jpg');">
+                                                                </div>
+                                                            <%
+                                                            }
+                                                            else {
+                                                            %>
+                                                                <div id="imagePreview" style="background-image: url('/img/default-male-avatar.png');">
+                                                                </div>
+                                                            <%
+                                                            }
+                                                        %>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">First Name</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.first_name %>" name="first_name">
+                                                    <span class="material-input"></span></div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Your Email</label>
+                                                    <input class="form-control" placeholder="" type="email" value="<%= user.email %>" disabled name="email">
+                                                    <span class="material-input"></span>
+                                                </div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Your Phone</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.phone %>" name="phone">
+                                                    <span class="material-input"></span>
+                                                </div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Insurance Number</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.iin %>" name="iin">
+                                                    <span class="material-input"></span>
+                                                </div>
+                                                <div class="form-group label-floating is-select">
+                                                    <label class="control-label">Your Gender</label>
+                                                    <select class="form-select" name="gender">
+                                                        <%
+                                                            if(user.gender === 'male') {
+                                                                %>
+                                                                <option value="MA" selected>Male</option>
+                                                                <option value="FE">Female</option>
+                                                                <%
+                                                            }
+                                                            else {
+                                                                %>
+                                                                <option value="MA">Male</option>
+                                                                <option value="FE" selected>Female</option>
+                                                                <%
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Last Name</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.last_name %>" name="last_name">
+                                                    <span class="material-input"></span></div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Your Username</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.username %>" name="username">
+                                                    <span class="material-input"></span></div>
+                                                <div class="form-group date-time-picker label-floating">
+                                                    <label class="control-label">Your Birthday</label>
+                                                    <%
+                                                    let dateArr = user.birth_day.split("-")
+                                                    let year = dateArr[0]
+                                                    let day = dateArr[2]
+
+                                                    user.birth_day = `${day}-${dateArr[1]}-${year}`
+                                                    %>
+                                                    <input name="datetimepicker" value="<%= user.birth_day.replace(/-/g,"/") %>" name="birthday">
+                                                    <span class="input-group-addon">
+                                                        <svg class="olymp-month-calendar-icon icon"><use xlink:href="#olymp-month-calendar-icon"></use></svg>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Address</label>
+                                                    <input class="form-control" placeholder="" type="text" value="<%= user.address %>" name="address">
+                                                    <span class="material-input"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Write a little description about you" name="bio"><%= user.bio %></textarea>
+                                                    <span class="material-input"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <button class="btn btn-primary btn-lg full-width" type="submit">Save all Changes</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-xl-12 order-xl-2 col-lg-12 order-lg-2 col-md-12 order-md-1 col-sm-12 col-12">
+                            <div class="ui-block">
+                                <div class="ui-block-title">
+                                    <h6 class="title">Change Password</h6>
+                                </div>
+                                <div class="ui-block-content">
+
+                                    <form id="change-password">
+                                        <div class="row">
+                                            <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Confirm Current Password</label>
+                                                    <input class="form-control" placeholder="" type="password" value="" name="currentPassword" id="currentPassword">
+                                                    <span class="material-input"></span></div>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="form-group label-floating is-empty">
+                                                    <label class="control-label">Your New Password</label>
+                                                    <input class="form-control" placeholder="" type="password" name="newPassword" id="newPassword">
+                                                    <span class="material-input"></span></div>
+                                            </div>
+                                            <div class="col col-lg-6 col-md-6 col-sm-12 col-12">
+                                                <div class="form-group label-floating is-empty">
+                                                    <label class="control-label">Confirm New Password</label>
+                                                    <input class="form-control" placeholder="" type="password" name="confirmNewPassword" id="confirmNewPassword">
+                                                    <span class="material-input"></span></div>
+                                            </div>
+                                            <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                <button class="btn btn-primary btn-lg full-width" type="submit">Change Password Now!</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS Scripts -->
+<%- include('../partials/footerIncludes') %>
+<script>
+    $("#change-settings").submit(function(e) {
+        e.preventDefault();
+
+        let formDetails = document.getElementById('change-settings')
+        let formData = new FormData(formDetails);
+
+        $.ajax({
+            url: "<%= baseRoute %>dashboard_can/change_settings",
+            type: 'POST',
+            data: formData,
+            success: (result) => {
+                if(result.msg === 'settings updated') {
+                    window.location.href = '<%= baseRoute %>dashboard_can'
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+
+    });
+
+    $("#change-password").submit(function (e) {
+        e.preventDefault();
+
+        if($("#newPassword").val() !== $("#confirmNewPassword").val()) {
+            return;
+        }
+
+        let formDetails = document.getElementById('change-password');
+        let formData = new FormData(formDetails);
+
+        $.ajax({
+            url: "<%= baseRoute %>dashboard_can/change_password",
+            type: 'POST',
+            data: formData,
+            success: (result) => {
+                if(result.msg === 'password updated') {
+                    window.location.href = '<%= baseRoute %>dashboard_can'
+                }
+                else if(result.msg === 'password incorrect'){
+                    alert("Password is incorrent")
+                }
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    })
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                $('#imagePreview').hide();
+                $('#imagePreview').fadeIn(650);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#imageUpload").change(function() {
+        readURL(this);
+    });
+</script>
+</body>
+</html>
